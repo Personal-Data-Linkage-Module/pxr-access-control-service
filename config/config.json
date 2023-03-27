@@ -1,0 +1,22 @@
+{
+    "access_manage": {
+        "protocol": "http",
+        "base_url": "http://localhost:3014/access-control-manage",
+        "default_path": "block"
+    },
+    "cert": {
+        "client_crt": "./cert/client-ca.crt",
+        "client_key": "./cert/client.key"
+    },
+    "path": {
+        "block": "/block",
+        "store": "/store"
+    },
+    "requesturl": "POST:/book-operate/event/,PUT:/book-operate/event/,POST:/book-operate/thing/,PUT:/book-operate/thing/,POST:/book-operate/document/,PUT:/book-operate/document/",
+    "operator": {
+        "base_url": "http://localhost:3000/operator"
+    },
+    "catalog": {
+        "base_url": "http://localhost:3001/catalog"
+    }
+}

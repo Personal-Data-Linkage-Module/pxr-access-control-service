@@ -1,0 +1,139 @@
+[
+    {
+        "controlManagePath": "/operator",
+        "targetApi": [
+            {
+                "method": "PUT",
+                "url": "^\\/operator\\/\\d+\\/?$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/operator\\/password\\/\\d+\\/?$"
+            },
+            {
+                "method": "DELETE",
+                "url": "^\\/operator\\/\\d+\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/store",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/event\\/.+\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/thing\\/.+\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/thing\\/bulk\\/.+\\/.+\\/?$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/book-operate\\/event\\/.+\\/?\\?eventSourceId=.+$"
+            },
+            {
+                "url": "^\\/book-operate\\/event\\/.+\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/?$/",
+                "method": "PUT",
+                "path": "/store"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/book-operate\\/thing\\/.+\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/?\\?eventSourceId=.+$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/book-operate\\/thing\\/.+\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/document\\/.+\\/?$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/book-operate\\/document\\/.+\\/?\\?documentSourceId=.+$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/book-operate\\/document\\/.+\\/[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/book",
+        "targetApi": [
+            {
+                "method": "GET",
+                "url": "^\\/book-manage\\/search\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/book-manage\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/app-wf-user",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/user\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/actor",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/catalog-update\\/actor\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/catalog-update\\/actor\\/approval\\/?.+\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/join",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/catalog-update\\/join\\/?$"
+            },
+            {
+                "method": "POST",
+                "url": "^\\/catalog-update\\/join\\/approval\\/.+\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/catalog",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/catalog\\/ext\\/?$"
+            },
+            {
+                "method": "PUT",
+                "url": "^\\/catalog\\/ext\\/\\d+\\/?$"
+            },
+            {
+                "method": "DELETE",
+                "url": "^\\/catalog\\/ext\\/\\d+\\/?$"
+            }
+        ]
+    },
+    {
+        "controlManagePath": "/share/continuous",
+        "targetApi": [
+            {
+                "method": "POST",
+                "url": "^\\/book-operate\\/share\\/search\\/?$"
+            }
+        ]
+    }
+]
