@@ -24,19 +24,19 @@ import { transformToDateTime, transformToNumber } from '../../common/Transform';
 export class CodeObject {
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         _value: number;
 
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         _ver: number;
 }
 
 export class OperatorObject {
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsIn([0, 2, 3])
         type: 0 | 2 | 3;
 
@@ -76,7 +76,7 @@ export class CallerObject {
 
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         blockCode: number;
 
     @IsString()
@@ -104,7 +104,7 @@ export class CallerObject {
 export class TargetObject {
     @IsOptional()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         blockCode: number;
 
     @IsString()
@@ -118,7 +118,7 @@ export class TargetObject {
 
     @IsDefined()
     @IsDate()
-    @Transform(transformToDateTime)
+    @Transform(({ value }) => { return transformToDateTime(value); })
         expirationDate: Date;
 
     @IsOptional()

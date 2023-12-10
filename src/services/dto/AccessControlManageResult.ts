@@ -27,11 +27,11 @@ export default class {
 
     @IsDate()
     @IsDefined()
-    @Transform(transformToDateTime)
+    @Transform(({ value }) => { return transformToDateTime(value); })
         expirationDate: Date;
 
     @IsNumber()
     @IsDefined()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         blockCode: number;
 }

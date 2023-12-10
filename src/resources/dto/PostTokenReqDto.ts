@@ -22,19 +22,19 @@ import { transformToNumber } from '../../common/Transform';
 export class CodeObject {
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         _value: number;
 
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         _ver: number;
 }
 
 export class OperatorObject {
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsIn([0, 2, 3])
         type: number;
 
@@ -68,7 +68,7 @@ export class OperatorObject {
 export class CallerObject {
     @IsDefined()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         blockCode: number;
 
     @IsString()
@@ -101,7 +101,7 @@ export class CallerObject {
 export class TargetObject {
     @IsOptional()
     @IsNumber()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         blockCode: number;
 
     @IsString()
