@@ -43,8 +43,8 @@ export class ExpressConfig {
         setupHealthCheck(this.app);
         // SDE-MSA-PRIN ステートレスにする （MSA-PRIN-SD-01）
 
-        this.app.use(bodyParser.json({ limit: '100mb' }));
-        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json({ limit: '100mb' }) as express.RequestHandler);
+        this.app.use(bodyParser.urlencoded({ extended: false }) as express.RequestHandler);
         this.app.use(cookieParser());
 
         /**

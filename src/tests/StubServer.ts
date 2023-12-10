@@ -14,7 +14,7 @@ export class AccessControlManageServer {
     server: Server;
     constructor (port: number, status: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/block', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -76,7 +76,7 @@ export class AccessControlManageServerStore {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/store', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -99,7 +99,7 @@ export class AccessControlManageServerShare {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/share/continuous', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -123,7 +123,7 @@ export class AccessControlManage1Server {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/block', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -147,7 +147,7 @@ export class AccessControlManage2Server {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/block', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -171,7 +171,7 @@ export class AccessControlManage3Server {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/block', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -195,7 +195,7 @@ export class AccessControlManage4Server {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/block', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
@@ -219,7 +219,7 @@ export class AccessControlManage5Server {
     server: Server;
     constructor (port: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
         this.app.post('/access-control-manage/operator', (req: express.Request, res: express.Response) => {
             const obj = req.body.map((elem: any, index: number) => {
                 return {
