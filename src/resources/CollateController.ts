@@ -42,7 +42,7 @@ export default class CollateController {
         // レスポンスを返す
         return {
             userId: userID,
-            parameter: parameter
+            parameter
         };
     }
 }

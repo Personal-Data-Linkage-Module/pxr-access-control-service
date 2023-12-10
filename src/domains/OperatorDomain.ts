@@ -52,10 +52,10 @@ export default class OperatorDomain {
         update: boolean;
         delete: boolean;
     } = {
-        add: false,
-        update: false,
-        delete: false
-    };
+            add: false,
+            update: false,
+            delete: false
+        };
 
     /** ブロックカタログコード */
     blockCode?: number = null;

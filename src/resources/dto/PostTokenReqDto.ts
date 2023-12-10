@@ -23,12 +23,12 @@ export class CodeObject {
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    _value: number;
+        _value: number;
 
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    _ver: number;
+        _ver: number;
 }
 
 export class OperatorObject {
@@ -36,64 +36,64 @@ export class OperatorObject {
     @IsNumber()
     @Transform(transformToNumber)
     @IsIn([0, 2, 3])
-    type: number;
+        type: number;
 
     @Type(() => CodeObject)
     @IsOptional()
     @IsObject()
     @IsNotEmptyObject()
     @ValidateNested()
-    app?: CodeObject;
+        app?: CodeObject;
 
     @IsOptional()
     @IsObject()
     @IsNotEmptyObject()
     @ValidateNested()
-    wf?: CodeObject;
+        wf?: CodeObject;
 
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    role?: CodeObject[];
+        role?: CodeObject[];
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    loginId?: string;
+        loginId?: string;
 
     @IsOptional()
-    requestBody: any;
+        requestBody: any;
 }
 
 export class CallerObject {
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    blockCode: number;
+        blockCode: number;
 
     @IsString()
     @IsNotEmpty()
-    apiUrl: string;
+        apiUrl: string;
 
     @IsString()
     @IsNotEmpty()
     @IsIn(['GET', 'POST', 'DELETE', 'PUT'])
-    apiMethod: 'GET' | 'POST' | 'DELETE' | 'PUT';
+        apiMethod: 'GET' | 'POST' | 'DELETE' | 'PUT';
 
     @Type(() => OperatorObject)
     @IsDefined()
     @ValidateNested()
     @IsObject()
     @IsNotEmptyObject()
-    operator: OperatorObject;
+        operator: OperatorObject;
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    userId?: string;
+        userId?: string;
 
     @IsOptional()
-    requestBody?: any;
+        requestBody?: any;
 
     apiCode: string;
 }
@@ -102,30 +102,30 @@ export class TargetObject {
     @IsOptional()
     @IsNumber()
     @Transform(transformToNumber)
-    blockCode: number;
+        blockCode: number;
 
     @IsString()
     @IsNotEmpty()
-    apiUrl: string;
+        apiUrl: string;
 
     @IsString()
     @IsNotEmpty()
     @IsIn(['GET', 'POST', 'DELETE', 'PUT'])
-    apiMethod: 'GET' | 'POST' | 'DELETE' | 'PUT';
+        apiMethod: 'GET' | 'POST' | 'DELETE' | 'PUT';
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    userId?: string;
+        userId?: string;
 
     @IsOptional()
-    parameter: any;
+        parameter: any;
 
     @Type(() => CodeObject)
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    _code: CodeObject[];
+        _code: CodeObject[];
 }
 
 export default class {
@@ -134,12 +134,12 @@ export default class {
     @ValidateNested()
     @IsObject()
     @IsNotEmptyObject()
-    caller: CallerObject;
+        caller: CallerObject;
 
     @Type(() => TargetObject)
     @IsDefined()
     @ValidateNested()
     @IsObject()
     @IsNotEmptyObject()
-    target: TargetObject;
+        target: TargetObject;
 }

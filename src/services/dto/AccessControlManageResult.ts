@@ -11,27 +11,27 @@ import { transformToDateTime, transformToNumber } from '../../common/Transform';
 export default class {
     @IsString()
     @IsNotEmpty()
-    apiUrl: string;
+        apiUrl: string;
 
     @IsString()
     @IsNotEmpty()
-    apiMethod: string;
+        apiMethod: string;
 
     @IsString()
     @IsNotEmpty()
-    apiToken: string;
+        apiToken: string;
 
     @IsString()
     @IsOptional()
-    userId: string;
+        userId: string;
 
     @IsDate()
     @IsDefined()
     @Transform(transformToDateTime)
-    expirationDate: Date;
+        expirationDate: Date;
 
     @IsNumber()
     @IsDefined()
     @Transform(transformToNumber)
-    blockCode: number;
+        blockCode: number;
 }

@@ -97,7 +97,7 @@ export function IsNotObject (validationOptions?: ValidationOptions) {
         registerDecorator({
             name: 'isNotObject',
             target: object.constructor,
-            propertyName: propertyName,
+            propertyName,
             options: validationOptions,
             validator: {
                 validate (value: any, args: ValidationArguments) {
@@ -117,7 +117,7 @@ export function IsNotEmptyArray (validationOptions?: ValidationOptions) {
         registerDecorator({
             name: 'isNotEmptyArray',
             target: object.constructor,
-            propertyName: propertyName,
+            propertyName,
             options: validationOptions,
             validator: {
                 validate (value: any, args: ValidationArguments) {
@@ -137,7 +137,7 @@ export function IsStringEmptyInArray (validationOptions?: ValidationOptions) {
         registerDecorator({
             name: 'isStringEmptyInArray',
             target: object.constructor,
-            propertyName: propertyName,
+            propertyName,
             options: validationOptions,
             validator: {
                 validate (value: any, args: ValidationArguments) {
