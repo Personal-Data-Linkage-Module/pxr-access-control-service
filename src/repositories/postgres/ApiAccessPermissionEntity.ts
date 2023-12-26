@@ -26,115 +26,115 @@ export default class ApiAccessPermissionEntity extends BaseEntity {
      * トークン
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'token' })
-    token: string;
+        token: string;
 
     /**
      * 呼出先ブロックカタログコード
      */
     @Column({ type: 'bigint', nullable: true, name: 'target_block_code' })
-    targetBlockCode: number;
+        targetBlockCode: number;
 
     /**
      * 呼出先APIURL
      */
     @Column({ type: 'text', nullable: false, name: 'target_api_url' })
-    targetApiUrl: string;
+        targetApiUrl: string;
 
     /**
      * 呼出先APIメソッド
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'target_api_method' })
-    targetApiMethod: string;
+        targetApiMethod: string;
 
     /**
      * 呼出先利用者ID
      */
     @Column({ type: 'varchar', length: 255, nullable: true, name: 'target_user_id' })
-    targetUserId: string;
+        targetUserId: string;
 
     /**
      * 有効期限
      */
     @Column({ type: 'timestamp without time zone', nullable: false, name: 'expiration_date' })
-    expirationDate: Date;
+        expirationDate: Date;
 
     /**
      * 呼出元ブロックカタログコード
      */
     @Column({ type: 'bigint', nullable: false, name: 'caller_block_code' })
-    callerBlockCode: number;
+        callerBlockCode: number;
 
     /**
      * 呼出元APIURL
      */
     @Column({ type: 'text', nullable: false, name: 'caller_api_url' })
-    callerApiUrl: string;
+        callerApiUrl: string;
 
     /**
      * 呼出元APIメソッド
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'caller_api_method' })
-    callerApiMethod: string;
+        callerApiMethod: string;
 
     /**
      * 呼出元先APIコード
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'caller_api_code' })
-    callerApiCode: string;
+        callerApiCode: string;
 
     /**
      * 呼出元ワークフローカタログコード
      */
     @Column({ type: 'bigint', nullable: true, name: 'caller_wf_code' })
-    callerWfCode: number;
+        callerWfCode: number;
 
     /**
      * 呼出元ワークフローカタログバージョン
      */
     @Column({ type: 'bigint', nullable: true, name: 'caller_wf_version' })
-    callerWfVersion: number;
+        callerWfVersion: number;
 
     /**
      * 呼出元アプリケーションカタログコード
      */
     @Column({ type: 'bigint', nullable: true, name: 'caller_app_code' })
-    callerAppCode: number;
+        callerAppCode: number;
 
     /**
      * 呼出元アプリケーションカタログバージョン
      */
     @Column({ type: 'bigint', nullable: true, name: 'caller_app_version' })
-    callerAppVersion: number;
+        callerAppVersion: number;
 
     /**
      * 呼出元オペレータタイプ
      */
     @Column({ type: 'smallint', nullable: false, name: 'caller_operator_type' })
-    callerOperatorType: number;
+        callerOperatorType: number;
 
     /**
      * 呼出元オペレータ
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'caller_operator_login_id' })
-    callerOperatorLoginId: string;
+        callerOperatorLoginId: string;
 
     /**
      * パラメータ
      */
     @Column({ type: 'text', nullable: false, name: 'parameter' })
-    parameter: string;
+        parameter: string;
 
     /**
      * 削除フラグ
      */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean = false;
+        isDisabled: boolean = false;
 
     /**
      * 登録者
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string;
+        createdBy: string;
 
     /**
      * 登録日時
@@ -146,7 +146,7 @@ export default class ApiAccessPermissionEntity extends BaseEntity {
      * 更新者
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string;
+        updatedBy: string;
 
     /**
      * 更新日時

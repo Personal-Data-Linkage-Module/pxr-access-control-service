@@ -18,22 +18,22 @@ import {
 export class CallerObject {
     @IsString()
     @IsNotEmpty()
-    apiUrl: string;
+        apiUrl: string;
 }
 
 export class TargetObject {
     @IsString()
     @IsNotEmpty()
-    apiUrl: string;
+        apiUrl: string;
 
     @IsString()
     @IsNotEmpty()
     @IsIn(['GET', 'POST', 'DELETE', 'PUT'])
-    apiMethod: string;
+        apiMethod: string;
 
     @IsString()
     @IsNotEmpty()
-    apiToken: string;
+        apiToken: string;
 }
 
 export default class PostCollateReqDto {
@@ -42,12 +42,12 @@ export default class PostCollateReqDto {
     @IsObject()
     @IsNotEmptyObject()
     @ValidateNested()
-    caller: CallerObject;
+        caller: CallerObject;
 
     @Type(type => TargetObject)
     @IsDefined()
     @IsObject()
     @IsNotEmptyObject()
     @ValidateNested()
-    target: TargetObject;
+        target: TargetObject;
 }

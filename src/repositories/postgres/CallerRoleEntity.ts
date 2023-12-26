@@ -26,31 +26,31 @@ export default class CallerRoleEntity extends BaseEntity {
      * APIアクセス許可ID
      */
     @Column({ type: 'bigint', nullable: false, name: 'api_access_permission_id' })
-    apiAccessPermissionId: number;
+        apiAccessPermissionId: number;
 
     /**
      * 呼出元ロールカタログコード
      */
     @Column({ type: 'bigint', nullable: false, name: 'role_catalog_code' })
-    roleCatalogCode: number;
+        roleCatalogCode: number;
 
     /**
      * 呼出元ロールカタログバージョン
      */
     @Column({ type: 'bigint', nullable: false, name: 'role_catalog_version' })
-    roleCatalogVersion: number;
+        roleCatalogVersion: number;
 
     /**
      * 削除フラグ
      */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean = false;
+        isDisabled: boolean = false;
 
     /**
      * 登録者
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string;
+        createdBy: string;
 
     /**
      * 登録日時
@@ -62,7 +62,7 @@ export default class CallerRoleEntity extends BaseEntity {
      * 更新者
      */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string;
+        updatedBy: string;
 
     /**
      * 更新日時
