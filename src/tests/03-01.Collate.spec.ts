@@ -333,4 +333,57 @@ describe('access-control API', () => {
             expect(response.status).toBe(400);
         });
     });
+    describe('SNS通知バグ対応追加ケース', () => {
+        test('正常: api_access_permission.parameter の内容がレスポンスに反映されているかの確認', async () => {
+            // 事前データ準備
+            await common.executeSqlString(`
+                INSERT INTO pxr_access_control.api_access_permission
+                (
+                    token,
+                    target_block_code, target_api_url, target_api_method, target_user_id, expiration_date,
+                    caller_block_code, caller_api_url, caller_api_method, caller_api_code,
+                    caller_wf_code, caller_wf_version, 
+                    caller_app_code, caller_app_version,
+                    caller_operator_type, caller_operator_login_id, 
+                    parameter, 
+                    is_disabled,
+                    created_by, created_at, updated_by, updated_at
+                )
+                VALUES(
+                    'f9645df7-768f-7574-4a8a-9928654ebd54',
+                    1, '/book-operate/store/{userId}', 'POST', 'test_user_#7434', '2030-01-01 00:00:00', 
+                    1, '/book-operate/store/{userId}', '', '', 
+                    1, 1, 
+                    1, 1, 
+                    1, '', 
+                    '[{_value: 1000009, _ver: 1}]',
+                    false,
+                    'pxr_user', NOW(), 'pxr_user', NOW()
+                );
+            `);
+            const response = await supertest(expressApp)
+                .post(Url.collateURI)
+                .set({ 'Content-Type': 'application/json', accept: 'application/json' })
+                .set({ session: encodeURIComponent(JSON.stringify(Session.pxrRoot)) })
+                .send(JSON.stringify(
+                    {
+                        caller: {
+                            apiUrl: '/book-operate/store/{userId}'
+                        },
+                        target: {
+                            apiUrl: '/book-operate/store/{userId}',
+                            apiMethod: 'POST',
+                            apiToken: 'f9645df7-768f-7574-4a8a-9928654ebd54'
+                        }
+                    }
+                ));
+
+            // Expect status Success Code
+            expect(response.status).toBe(200);
+            expect(response.body).toMatchObject({
+                userId: 'test_user_#7434',
+                parameter: '[{_value: 1000009, _ver: 1}]'
+            });
+        });
+    });
 });
