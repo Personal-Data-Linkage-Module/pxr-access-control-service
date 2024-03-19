@@ -1677,4 +1677,59 @@ describe('access-control API', () => {
             expect(response.status).toBe(400);
         });
     });
+    describe('SNS通知バグ対応追加ケース', () => {
+        test('異常: アクセス制御管理サービスのAPIトークン生成指示APIから蓄積/共有不可のエラーレスポンス', async () => {
+            accessControlManageServer = new AccessControlManageServerStore(3014, 401);
+            catalogServer = new CatalogServer(3001, 1000001, 200);
+            const response = await supertest(expressApp)
+                .post(Url.tokenURI)
+                .set({ 'Content-Type': 'application/json', accept: 'application/json' })
+                .set({ session: encodeURIComponent(JSON.stringify(Session.pxrRoot)) })
+                .send(JSON.stringify(
+                    [
+                        {
+                            caller: {
+                                blockCode: 1111111,
+                                apiUrl: '/book-operate/event/{userId}',
+                                apiMethod: 'GET',
+                                userId: 'taro_yamada.pxr-root',
+                                apiCode: '0abdbf81-686c-423b-823a-ac0d889b0ae6',
+                                operator: {
+                                    type: 0,
+                                    loginId: 'taro_yamada.pxr-root'
+                                },
+                                requestBody: {
+                                    code: {
+                                        value: 1000001
+                                    },
+                                    app: {
+                                        app: {
+                                            value: {
+                                                _value: 1000005,
+                                                _ver: 1
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            target: {
+                                blockCode: 2222222,
+                                apiUrl: '/book-operate/event/{userId}',
+                                apiMethod: 'POST',
+                                _code: [
+                                    {
+                                        _value: 10000001,
+                                        _ver: 1
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                ));
+
+            // Expect status Success Code
+            expect(response.status).toBe(401);
+            expect(response.body.message).toBe('不可判定メッセージ');
+        });
+    });
 });

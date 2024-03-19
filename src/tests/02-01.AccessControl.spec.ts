@@ -6,6 +6,8 @@ import * as supertest from 'supertest';
 import Application from '../index';
 import Common, { Url } from './Common';
 import { Session } from './Session';
+import { DateTimeFormatString } from '../common/Transform';
+import moment = require('moment');
 
 // 対象アプリケーションを取得
 const expressApp = Application.express.app;
@@ -30,6 +32,11 @@ describe('access-control API', () => {
         // サーバ停止
         await Application.stop();
     });
+
+    // 有効期限
+    const expirationDate = moment(new Date())
+        .add(parseInt('40'), 'minutes')
+        .format(DateTimeFormatString);
 
     /**
      * APIトークン取得開始
@@ -62,7 +69,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -107,7 +114,7 @@ describe('access-control API', () => {
                                 blockCode: 4444444,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -158,7 +165,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -209,7 +216,7 @@ describe('access-control API', () => {
                                 blockCode: 4444444,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event/%253Fns%253D%252Fabc',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -260,7 +267,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -301,7 +308,7 @@ describe('access-control API', () => {
                                 blockCode: 7777777,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -346,7 +353,7 @@ describe('access-control API', () => {
                                 blockCode: 4444444,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -377,7 +384,7 @@ describe('access-control API', () => {
                                 blockCode: 5555555,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -438,7 +445,7 @@ describe('access-control API', () => {
                             blockCode: 2222222,
                             apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                             apiMethod: 'GET',
-                            expirationDate: '2500-11-19T10:06:34.000+0900',
+                            expirationDate,
                             parameter: null
                         }
                     }
@@ -470,7 +477,7 @@ describe('access-control API', () => {
                                 blockCode: 2222222,
                                 apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: null
                             }
                         }
@@ -504,7 +511,7 @@ describe('access-control API', () => {
                                 blockCode: 2222222,
                                 apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: null
                             }
                         }
@@ -538,7 +545,7 @@ describe('access-control API', () => {
                                 blockCode: 'bbbbb',
                                 apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: null
                             }
                         }
@@ -572,7 +579,7 @@ describe('access-control API', () => {
                                 blockCode: 2222222,
                                 apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: null
                             }
                         }
@@ -767,7 +774,7 @@ describe('access-control API', () => {
                                 blockCode: 2222222,
                                 apiUrl: 'https://~~~/info-account-manage/{userId}/contract',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: null
                             }
                         }
@@ -844,7 +851,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -894,7 +901,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -945,7 +952,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -996,7 +1003,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -1046,7 +1053,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -1097,7 +1104,7 @@ describe('access-control API', () => {
                                 blockCode: 6666666,
                                 apiUrl: 'https://~~~/book-operate/share',
                                 apiMethod: 'GET',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -1141,7 +1148,7 @@ describe('access-control API', () => {
                                 blockCode: 4444444,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -1185,7 +1192,7 @@ describe('access-control API', () => {
                                 blockCode: 4444444,
                                 apiUrl: 'https://~~~/book-operate/store/{userId}/event',
                                 apiMethod: 'POST',
-                                expirationDate: '2500-11-19T10:06:34.000+0900',
+                                expirationDate,
                                 parameter: {
                                     dataType: [
                                         {
@@ -1245,6 +1252,85 @@ describe('access-control API', () => {
 
             // Expect status Bad Request
             expect(response.status).toBe(400);
+        });
+    });
+    describe('SNS通知バグ対応追加ケース', () => {
+        test('正常: api_access_permission.parameter にリクエストと同等の内容が保存されているかを確認', async () => {
+            const response = await supertest(expressApp)
+                .post(Url.accessControlURI)
+                .set({ 'Content-Type': 'application/json', accept: 'application/json' })
+                .set({ session: encodeURIComponent(JSON.stringify(Session.pxrRoot)) })
+                .send(JSON.stringify(
+                    [
+                        {
+                            caller: {
+                                blockCode: 3333333,
+                                apiUrl: 'https://~~~/book-operate/share/{userId}',
+                                apiMethod: 'POST',
+                                userId: 'xxx_yyy.app',
+                                apiCode: '0abdbf81-686c-423b-823a-ac0d889b0ae6',
+                                operator: {
+                                    type: 2,
+                                    app: {
+                                        _value: 1000099,
+                                        _ver: 1
+                                    },
+                                    loginId: 'app_member01'
+                                }
+                            },
+                            target: {
+                                blockCode: 6666666,
+                                apiUrl: 'https://~~~/book-operate/share',
+                                apiMethod: 'GET',
+                                expirationDate,
+                                parameter: JSON.stringify({
+                                    document: [
+                                        {
+                                            _value: 1000008,
+                                            _ver: 1
+                                        }
+                                    ],
+                                    event: [
+                                        {
+                                            _value: 1000008,
+                                            _ver: 1
+                                        }
+                                    ],
+                                    thing: [
+                                        {
+                                            _value: 1000008,
+                                            _ver: 1
+                                        }
+                                    ]
+                                })
+                            }
+                        }
+                    ]
+                ));
+
+            // Expect status Success Code
+            expect(response.status).toBe(200);
+            const record = await common.executeSqlString(`select * from  pxr_access_control.api_access_permission where token='${response.body[0].apiToken}'`);
+            expect(record[0].parameter).toBe(JSON.stringify({
+                document: [
+                    {
+                        _value: 1000008,
+                        _ver: 1
+                    }
+                ],
+                event: [
+                    {
+                        _value: 1000008,
+                        _ver: 1
+                    }
+                ],
+                thing: [
+                    {
+                        _value: 1000008,
+                        _ver: 1
+                    }
+                ]
+            }));
         });
     });
 });
