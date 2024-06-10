@@ -62,6 +62,6 @@ export default class Common {
      */
     public async executeSqlString (sql: string) {
         // DBを初期化
-        await (await connectDatabase()).query(sql);
+        return (await connectDatabase()).query(sql);
     }
 }

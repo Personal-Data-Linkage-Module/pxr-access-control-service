@@ -52,6 +52,8 @@ export default class AccessControlManagerService {
             const { statusCode } = result.response;
             if (statusCode === ResponseCode.NO_CONTENT || statusCode === ResponseCode.BAD_REQUEST) {
                 throw new AppError(result.body.message, ResponseCode.BAD_REQUEST);
+            } else if (statusCode === ResponseCode.UNAUTHORIZED) {
+                throw new AppError(result.body.message, ResponseCode.UNAUTHORIZED);
             } else if (statusCode !== ResponseCode.OK) {
                 throw new AppError(Message.FAILED_CREATE_TOKEN, statusCode);
             }

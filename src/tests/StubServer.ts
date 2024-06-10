@@ -74,21 +74,26 @@ export class AccessControlManageServer {
 export class AccessControlManageServerStore {
     app: express.Express;
     server: Server;
-    constructor (port: number) {
+    constructor (port: number, status?: number) {
         this.app = express();
-        this.app.use(bodyParser.json({ limit: '50mb' }) as express.RequestHandler);
+        this.app.use(bodyParser.json({ limit: '50mb' }));
         this.app.post('/access-control-manage/store', (req: express.Request, res: express.Response) => {
-            const obj = req.body.map((elem: any, index: number) => {
-                return {
-                    apiUrl: elem.target.apiUrl,
-                    apiMethod: elem.target.apiMethod,
-                    apiToken: 'd0af96799512cf7e4b9ebda5234a7cc8ea49d402d29191b5e9128e15a939917' + index,
-                    userId: elem.caller.userId,
-                    expirationDate: '2020-12-28T14:20:34.000+0900',
-                    blockCode: elem.target.blockCode || 1000109
-                };
-            });
-            res.status(200).json(obj);
+            if (!status) {
+                const obj = req.body.map((elem: any, index: number) => {
+                    return {
+                        apiUrl: elem.target.apiUrl,
+                        apiMethod: elem.target.apiMethod,
+                        apiToken: 'd0af96799512cf7e4b9ebda5234a7cc8ea49d402d29191b5e9128e15a939917' + index,
+                        userId: elem.caller.userId,
+                        expirationDate: '2020-12-28T14:20:34.000+0900',
+                        blockCode: elem.target.blockCode || 1000109
+                    };
+                });
+                res.status(200).json(obj);
+            } else if (status === 401) {
+                res.status(401).json({ message: '不可判定メッセージ' });
+            } 
+            
         });
         this.server = this.app.listen(port);
     }
