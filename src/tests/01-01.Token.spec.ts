@@ -1731,5 +1731,201 @@ describe('access-control API', () => {
             expect(response.status).toBe(401);
             expect(response.body.message).toBe('不可判定メッセージ');
         });
+        test('正常: APIトークンテーブルに呼出元、呼出先が重複するデータがある', async () => {
+            accessControlManageServer = new AccessControlManageServer(3014, 200);
+            catalogServer = new CatalogServer(3001, 1000001, 200);
+            // 事前データ準備
+            await common.executeSqlString(`
+            DELETE FROM pxr_access_control.api_token;
+            SELECT SETVAL('pxr_access_control.api_token_id_seq', 1, false);
+            INSERT INTO pxr_access_control.api_token
+                (
+                    token,
+                    target_block_code, target_api_url, target_api_method, target_user_id,
+                    expiration_date,
+                    caller_block_code, caller_api_url, caller_api_method,
+                    caller_api_code,
+                    caller_wf_code, caller_wf_version,
+                    caller_app_code, caller_app_version,
+                    caller_operator_type,
+                    caller_operator_login_id,
+                    is_disabled, created_by, created_at, updated_by, updated_at
+                )
+                VALUES
+                (
+                    'ff5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929',
+                    2222222, '/catalog/1000401', 'GET', null,
+                    '2030/12/31 00:00:00.000',
+                    1111111, '/pxr-block-proxy/', 'POST',
+                    '4161f0db-d14c-0d75-bdbd-882a4dbfc76a',
+                    null, null,
+                    null, null,
+                    3,
+                    'loginid',
+                    false, 'pxr_user', NOW(), 'pxr_user', NOW()
+                ),
+                (
+                    'gg5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929',
+                    2222222, '/catalog/1000401', 'GET', null,
+                    '2030/12/31 00:00:00.000',
+                    1111111, '/pxr-block-proxy/', 'POST',
+                    '91f3b8f3-e817-9c8c-1abb-936fdfec61a4',
+                    null, null,
+                    null, null,
+                    3,
+                    'loginid',
+                    false, 'pxr_user', NOW(), 'pxr_user', NOW()
+                );
+            `);
+            const response = await supertest(expressApp)
+                .post(Url.tokenURI)
+                .set({ 'Content-Type': 'application/json', accept: 'application/json' })
+                .set({ session: encodeURIComponent(JSON.stringify(Session.pxrRoot)) })
+                .send(JSON.stringify(
+                    [
+                        {
+                            caller: {
+                                blockCode: 1111111,
+                                apiUrl: '/pxr-block-proxy/',
+                                apiMethod: 'POST',
+                                userId: 'taro_yamada.pxr-root',
+                                apiCode: '0abdbf81-686c-423b-823a-ac0d889b0ae6',
+                                operator: {
+                                    type: 0,
+                                    loginId: 'taro_yamada.pxr-root'
+                                }
+                            },
+                            target: {
+                                blockCode: 2222222,
+                                apiUrl: '/catalog/1000401',
+                                apiMethod: 'GET'
+                            }
+                        }
+                    ]
+                ));
+
+            // Expect status Success Code
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBe(1);
+            expect(response.body[0]).toEqual({
+                apiUrl: '/catalog/1000401',
+                apiMethod: 'GET',
+                blockCode: 2222222,
+                apiToken: 'ff5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929'
+            });
+        });
+        test('正常: テーブルにアクター別の複数APIトークンあり', async () => {
+            accessControlManageServer = new AccessControlManageServerShare(3014);
+            catalogServer = new CatalogServer(3001, 1000001, 200);
+            // 事前データ準備
+            await common.executeSqlString(`
+            DELETE FROM pxr_access_control.api_token;
+            SELECT SETVAL('pxr_access_control.api_token_id_seq', 1, false);
+            INSERT INTO pxr_access_control.api_token
+                (
+                    token,
+                    target_block_code, target_api_url, target_api_method, target_user_id,
+                    expiration_date,
+                    caller_block_code, caller_api_url, caller_api_method,
+                    caller_api_code,
+                    caller_wf_code, caller_wf_version,
+                    caller_app_code, caller_app_version,
+                    caller_operator_type,
+                    caller_operator_login_id,
+                    attribute,
+                    is_disabled, created_by, created_at, updated_by, updated_at
+                )
+                VALUES
+                (
+                    'ee5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929',
+                    2222222, '/book-operate/share/search', 'POST', null,
+                    '2030/12/31 00:00:00.000',
+                    1000110, '/book-operate/share', 'POST',
+                    'd28911c6-bd27-00fd-e684-65bea6f8df24',
+                    null, null,
+                    1000007, 1,
+                    2,
+                    'loginid',
+                    '{"userId":"test_user1","app":{"_value":1000007},"wf":null,"document":[],"event":[],"thing":[{"_value":1000008,"_ver":1}]}',
+                    false, 'pxr_user', NOW(), 'pxr_user', NOW()
+                ),
+                (
+                    'fe5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929',
+                    3333333, '/book-operate/share/search', 'POST', null,
+                    '2030/12/31 00:00:00.000',
+                    1000110, '/book-operate/share', 'POST',
+                    '7140bb6b-f616-4763-f735-72e8d132e38a',
+                    null, null,
+                    1000007, 1,
+                    2,
+                    'loginid',
+                    '{"userId":"test_user1","app":{"_value":1000007},"wf":null,"document":[],"event":[],"thing":[{"_value":1000008,"_ver":1}]}',
+                    false, 'pxr_user', NOW(), 'pxr_user', NOW()
+                );
+            `);
+            const response = await supertest(expressApp)
+                .post(Url.tokenURI)
+                .set({ 'Content-Type': 'application/json', accept: 'application/json' })
+                .set({ session: encodeURIComponent(JSON.stringify(Session.app)) })
+                .send(JSON.stringify(
+                    [
+                        {
+                            caller: {
+                                blockCode: 1000110,
+                                apiUrl: '/book-operate/share',
+                                apiMethod: 'POST',
+                                userId: 'taro_yamada.pxr-root',
+                                apiCode: '0abdbf81-686c-423b-823a-ac0d889b0ae6',
+                                operator: {
+                                    type: 0,
+                                    loginId: 'taro_yamada.pxr-root'
+                                },
+                                requestBody: {
+                                    userId: 'test_user1',
+                                    app: {
+                                        _value: 1000007
+                                    },
+                                    wf: null,
+                                    document: [],
+                                    event: [],
+                                    thing: [
+                                        {
+                                            _value: 1000008,
+                                            _ver: 1
+                                        }
+                                    ]
+                                }
+                            },
+                            target: {
+                                blockCode: 1000110,
+                                apiUrl: '/book-operate/share/search',
+                                apiMethod: 'POST',
+                                _code: [
+                                    {
+                                        _value: 1000008,
+                                        _ver: 1
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                ));
+
+            // Expect status Success Code
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBe(2);
+            expect(response.body[0]).toEqual({
+                apiUrl: '/book-operate/share/search',
+                apiMethod: 'POST',
+                blockCode: 2222222,
+                apiToken: 'ee5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929'
+            });
+            expect(response.body[1]).toEqual({
+                apiUrl: '/book-operate/share/search',
+                apiMethod: 'POST',
+                blockCode: 3333333,
+                apiToken: 'fe5fd41305d043e45f6d2ed00e03844f06ee89d0e044541641166306a7d11929'
+            });
+        });
     });
 });

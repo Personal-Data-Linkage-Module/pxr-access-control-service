@@ -56,7 +56,7 @@ export default class TokenService {
 
         // 検索結果の配列を1行ずつチェックし生成指示依頼が必要か判定
         const requestParam: PostTokenReqDto[] = [];
-        const existsTokenList: any[] = [];
+        const existsTokenList: PostTokenResDto[] = [];
         for (const param of apiTokenParam) {
             param.caller.apiCode = uuid.v4();
             // DB検索結果からapiTokenが取得できたものとできなかったものに分ける
@@ -68,12 +68,13 @@ export default class TokenService {
                     param.target.apiUrl === token.targetApiUrl &&
                     param.target.apiMethod === token.targetApiMethod
                 ) {
-                    const temporaryParam = param as any;
-                    temporaryParam.target.blockCode = token.targetBlockCode;
-                    temporaryParam.caller.apiToken = token.token;
-                    existsTokenList.push(temporaryParam);
+                    existsTokenList.push({
+                        apiUrl: param.target.apiUrl,
+                        apiMethod: param.target.apiMethod,
+                        blockCode: token.targetBlockCode,
+                        apiToken: token.token
+                    });
                     allocateToRequest = false;
-                    break;
                 }
             }
             if (allocateToRequest) {
@@ -101,14 +102,7 @@ export default class TokenService {
             });
         }
 
-        const responses = existsTokenList.map(elem => {
-            const ret = new PostTokenResDto();
-            ret.apiUrl = elem.target.apiUrl;
-            ret.apiMethod = elem.target.apiMethod;
-            ret.blockCode = elem.target.blockCode;
-            ret.apiToken = elem.caller.apiToken;
-            return ret;
-        });
+        const responses = existsTokenList;
         responses.push(...apiTokenResponseDomains.map(elem => {
             const ret = new PostTokenResDto();
             ret.apiUrl = elem.targetApiUrl;
@@ -117,7 +111,14 @@ export default class TokenService {
             ret.apiToken = elem.token;
             return ret;
         }));
-        return responses;
+        // 呼出元URL、呼出元method、呼出先blockCodeが全て同一のレスポンスは重複除去する
+        const filteredResponse: PostTokenResDto[] = [];
+        for (const response of responses) {
+            if (!filteredResponse.some((ele) => ele.apiUrl === response.apiUrl && ele.apiMethod === response.apiMethod && ele.blockCode === response.blockCode)) {
+                filteredResponse.push(response);
+            }
+        }
+        return filteredResponse;
     }
 
     /**
@@ -182,7 +183,11 @@ export default class TokenService {
      */
     private async searchTokenList (connection: Connection, apiTokenParam: PostTokenReqDto[], operator: OperatorDomain) {
         const tokenList: ApiTokenEntity[] = [];
-        const now = moment(new Date()).tz(config.get('timezone')).format(DateTimeFormatString);
+        // 現在時刻にバッファ時間を加算
+        const now = moment(new Date())
+            .add(parseInt(config.get('bufferTime')), 'seconds')
+            .tz(config.get('timezone'))
+            .format(DateTimeFormatString);
         applicationLogger.info('now:' + now);
         const tokenRepository = new ApiTokenRepository(connection);
         for (const param of apiTokenParam) {
