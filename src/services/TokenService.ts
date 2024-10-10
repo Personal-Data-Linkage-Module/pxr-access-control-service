@@ -139,6 +139,11 @@ export default class TokenService {
                 this.setApplicationVersion(service, request, operator);
             }
 
+            // target.apiUrlにallowPartialStoreが設定されている場合はリクエストにフラグを設定する
+            if (request.target.apiUrl.indexOf('allowPartialStore=true') > 0) {
+                request.target.allowPartialStore = true;
+            }
+
             apiTokenParam.push(request);
         }
         return apiTokenParam;

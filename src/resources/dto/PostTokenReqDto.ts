@@ -13,10 +13,11 @@ import {
     IsArray,
     IsObject,
     IsNotEmptyObject,
-    IsIn
+    IsIn,
+    IsBoolean
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { transformToNumber } from '../../common/Transform';
+import { transformToBooleanFromString, transformToNumber } from '../../common/Transform';
 /* eslint-enable */
 
 export class CodeObject {
@@ -126,6 +127,11 @@ export class TargetObject {
     @IsArray()
     @ValidateNested({ each: true })
         _code: CodeObject[];
+
+    @IsOptional()
+    @IsBoolean()
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
+        allowPartialStore: boolean;
 }
 
 export default class {
